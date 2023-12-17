@@ -1,9 +1,10 @@
-import HeroSection from "./_components/HeroSection";
-import InfoBlock from "./_components/InfoBlock";
+import Image from "next/image";
+import HeroSection from "./../_components/HeroSection";
+import InfoBlock from "./../_components/InfoBlock";
 import { fetchDataFromStrapi, processInfoBlocks } from "@/utils/strapi.utils";
 
 export default async function Home() {
-  const data = await fetchDataFromStrapi("infoblocks-landing?populate=deep");
+  const data = await fetchDataFromStrapi("infoblocks-experience?populate=deep");
   const infoBlockData = processInfoBlocks(data);
 
   const heroHeadline = (
@@ -16,12 +17,14 @@ export default async function Home() {
 
   return (
     <main>
-      <HeroSection headline={heroHeadline} />
+      <HeroSection
+        imgSrc="/assets/hero-experience.png"
+        headline={heroHeadline}
+        theme="orange"
+      />
       {infoBlockData.map((data) => (
         <InfoBlock key={data.id} data={data} />
       ))}
     </main>
   );
 }
-
-export const revalidate = 300;

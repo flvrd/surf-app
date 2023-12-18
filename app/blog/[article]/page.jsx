@@ -1,6 +1,7 @@
 import ArticleIntro from "@/app/_components/Blog/ArticleIntro";
 import { fetchBlogArticles, fetchDataFromStrapi } from "@/utils/strapi.utils";
 import ArticleOverview from "@/app/_components/Blog/ArticleOverview";
+import ArticleComponent from "@/app/_components/Blog/ArticleComponent";
 
 export default async function Page({ params }) {
   const { article: slug } = params;
@@ -12,7 +13,12 @@ export default async function Page({ params }) {
   return (
     <main>
       <ArticleIntro article={article} />
-      <ArticleOverview article={article} />
+      <section className="article-section">
+        <ArticleOverview article={article} />
+        {article.articleContent.map((component) => (
+          <ArticleComponent key={component.id} component={component.id} />
+        ))}
+      </section>
     </main>
   );
 }
